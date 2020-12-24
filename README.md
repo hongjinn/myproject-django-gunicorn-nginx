@@ -3,9 +3,9 @@
 Create and deploy a Django website with a pretty domain name and https.
 
 * Django (Python framework)
-* Nginx (web server)
-* Gunicorn (let's Apache interface with Python)
-* SQLite (database)
+* Nginx (a reverse proxy server)
+* Gunicorn (Python server)
+* SQLite
 * AWS EC2 (virtual private machine)
 * Google Domains (where you will buy your domain name)
 
