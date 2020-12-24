@@ -110,28 +110,11 @@ ssh -i ~/.ssh/AWS_EC2_key.pem ubuntu@101.42.69.777         # Replace with your k
 sudo apt-get update && sudo apt-get upgrade -y             # The -y flag makes it so you hit yes for questions like "After this operation, 43.0 kB of additional disk space..."
 sudo apt install python3 -y                                # Install python3
 sudo apt install python3-pip -y                            # Install pip3
-sudo apt install python3-venv                              # So we can create a virtual environment
-
-sudo apt install nginx                                     # Install nginx
-
-
-sudo apt-get install apache2 -y                            # Install our web server
-sudo apt-get install libapache2-mod-wsgi-py3 -y            # Install mod_wsgi which is how Apache talks to Django
-sudo hostnamectl set-hostname django-server                # Set the host name to "django server"
+sudo apt install python3-venv -y                           # So we can create a virtual environment
+sudo apt install nginx -y                                  # Install nginx
 
 # Same commands, all on one line
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt install python3.7 -y && sudo apt install python3-pip -y && sudo apt install virtualenv -y && sudo apt-get install apache2 -y && sudo apt-get install libapache2-mod-wsgi-py3 -y && sudo hostnamectl set-hostname django-server
-```
-
-* Now we have to add a new line to the file /etc/hosts
-  * Edit the file by doing ```sudo nano /etc/hosts```
-  * Note that after doing edits with nano you can save your changes and exit by doing Ctrl+X and typing "y"
-  * Make the file look like this (below). Use your EC2 ip address. Do not change the name from "django-server"
-```
-127.0.0.1 localhost
-101.42.69.777 django-server
-
-# The following lines are desirable for...
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt install python3 -y && sudo apt install python3-pip -y && sudo apt install python3-venv -y && sudo apt install nginx -y
 ```
 
 # Gather Django files
