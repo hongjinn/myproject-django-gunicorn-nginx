@@ -108,9 +108,13 @@ ssh -i ~/.ssh/AWS_EC2_key.pem ubuntu@101.42.69.777         # Replace with your k
 
 # Let's install some important stuff
 sudo apt-get update && sudo apt-get upgrade -y             # The -y flag makes it so you hit yes for questions like "After this operation, 43.0 kB of additional disk space..."
-sudo apt install python3.7 -y                              # Install python3.7
+sudo apt install python3 -y                                # Install python3
 sudo apt install python3-pip -y                            # Install pip3
-sudo apt install virtualenv -y                             # Install virtual environment
+sudo apt install python3-venv                              # So we can create a virtual environment
+
+sudo apt install nginx                                     # Install nginx
+
+
 sudo apt-get install apache2 -y                            # Install our web server
 sudo apt-get install libapache2-mod-wsgi-py3 -y            # Install mod_wsgi which is how Apache talks to Django
 sudo hostnamectl set-hostname django-server                # Set the host name to "django server"
