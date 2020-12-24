@@ -62,7 +62,7 @@ Got it? Let's begin!
 * Click "Launch a virtual machine (With EC2)", you may have to search for this service if it's not on the home page
 
 * Configure it as follows:
-  * Select "Ubuntu Server 18.04 LTS (HVM), SSD Volume Type", you may have to search for it
+  * Select "Ubuntu Server 20.04 LTS (HVM), SSD Volume Type", you may have to search for it
   * Select "t2.micro" because it's free
   * Click "Next: Configure Instance Details" and don't make any changes
   * Click "Next: Add Storage" and don't make any changes
