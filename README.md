@@ -63,7 +63,7 @@ Got it? Let's begin!
 
 * Configure it as follows:
   * Select "Ubuntu Server 20.04 LTS (HVM), SSD Volume Type", you may have to search for it
-  * Select "t2.micro" because it's free
+  * Select "t2.medium"
   * Click "Next: Configure Instance Details" and don't make any changes
   * Click "Next: Add Storage" and don't make any changes
   * Click "Next: Add Tags" and don't make any changes
