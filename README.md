@@ -124,7 +124,8 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt install python3 -y &&
 * Let's say you want your local development folder to be on your Desktop. The process will be this: develop on your local computer (ie add a "Contact Me" page) then push changes to your EC2 to see live on the web
   * Go to your Desktop and create a new folder, you can call this anything you want. For instance "exampledotcom" by doing ```mkdir '/mnt/c/Users/Hongjinn Park/Desktop/exampledotcom'```
   * Navigate into the new folder you just created with ```cd !$```
-  * Get the files needed for your hello world template site by doing ```git clone git@github.com:hongjinn/myproject.git```
+  * Get the files needed for your hello world template site by doing ```git clone git@github.com:hongjinn/myproject-nginx.git```
+  * Next rename the folder created from doing git clone from myproject-nginx to myproject ```mv myproject-nginx myproject"
 
 * Now we have the template for your new site. But we have to do a few adjustments 
   * Edit the "settings.py" file with ```nano myproject/myapp/myapp/settings.py```
@@ -155,18 +156,42 @@ git push -u origin master                                                 # Push
 * Now lets create a virtual environment folder on your EC2. This is critical as mod_wsgi will point to it
 ```
 # From your EC2
-pip3 install --upgrade virtualenv                             # Upgrade your virtual environment
-virtualenv -p python3 /home/ubuntu/myproject/venv             # Create your virtual environment
+python3 -m venv /home/ubuntu/myproject/venv                   # Create your virtual environment
 source /home/ubuntu/myproject/venv/bin/activate               # Activate your virtual environment
 pip3 install -r /home/ubuntu/myproject/requirements.txt       # This installs all your dependencies
-python3 /home/ubuntu/myproject/myapp/manage.py collectstatic  # Collect static files
+python3 /home/ubuntu/myproject/myapp/manage.py collectstatic  # Collect static files, this creates a folder for Nginx to use and serve
 
 # Same commands, all one one line
-pip3 install --upgrade virtualenv && virtualenv -p python3 /home/ubuntu/myproject/venv && source /home/ubuntu/myproject/venv/bin/activate && pip3 install -r /home/ubuntu/myproject/requirements.txt && python3 /home/ubuntu/myproject/myapp/manage.py collectstatic
+python3 -m venv /home/ubuntu/myproject/venv && virtualenv -p python3 /home/ubuntu/myproject/venv && source /home/ubuntu/myproject/venv/bin/activate && pip3 install -r /home/ubuntu/myproject/requirements.txt && python3 /home/ubuntu/myproject/myapp/manage.py collectstatic
 ```
 
-* Now let's get Apache and wsgi configured
-```
+* Edit the nginx configuration file ```nano /home/ubuntu/myproject/config_files/myproject_nginx```
+
+* Replace with your EC2 address in two places
+  * ```server_name 101.42.69.777;```
+  * ```proxy_pass http://101.42.69.777:8000;``` and make sure you leave ```:8000;``` after your EC2 ip address
+
+* Now move the file to the right folder with ```sudo cp /home/ubuntu/myproject/config_files/myproject_nginx /etc/nginx/sites-available/```
+
+* Now we'll create a symlink to this file from another folder. Run the following commands: ```cd /etc/nginx/sites-enabled && sudo ln -s /etc/nginx/sites-available/myproject_nginx```
+
+* You can see the symlink by doing this command from the sites-enabled folder ```ls -l``
+
+* Now run Nginx server with ```sudo systemctl restart nginx```
+
+* Now run the Gunicorn server with ```gunicorn -c /home/ubuntu/myproject/config_files/gunicorn_config.py myapp.wsgi```
+
+* Now open your web browser and navigate to your EC2 ip address ```http://101.42.69.777```
+
+
+
+# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
+# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
+# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
+# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
+# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
+
+
 # Copy Apache config file
 sudo scp /home/ubuntu/myproject/config_files/django_project.conf /etc/apache2/sites-available/
 sudo a2ensite django_project                                  # Enables the config file we just copied
