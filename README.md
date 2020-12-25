@@ -199,6 +199,14 @@ sudo certbot --nginx -d example.com -d www.example.com          # -d=domain
   * You can do a dry run ```sudo certbot renew --dry-run``` and if you get no errors you're good to go
   * If the automated renewal process ever fails, Let’s Encrypt will send a message to the email you specified!
 
+# Commands to restart Nginx and Gunicorn
+
+* ```sudo systemctl restart nginx```
+
+* Check if Gunicorn is running ```ps -aux | grep gunicorn```
+
+* Kill Gunicorn processes ```pkill gunicorn```
+
 # Additional deployment steps
 
 * You need to change your Django SECRET_KEY which you can find in myproject/myapp/myapp/settings.py
