@@ -7,10 +7,7 @@ command = "/home/ubuntu/venv/bin/gunicorn"
 pythonpath = "/home/ubuntu/myproject/myapp/"
 
 # Where Gunicorn will talk to Nginx
-#bind = "127.0.0.1:8000"
-#bind = "54.219.137.158:8000"
 bind = "0.0.0.0:8000"
-#bind = "172.31.26.212:8000"
 
 # They recommend (2 x $num_cores) + 1
 workers = 3
