@@ -79,7 +79,7 @@ Got it? Let's begin!
   * Click "Launch Instances"
   * Now let's set up our SSH keys. From the bash terminal...
 ```
-# Go to where you key pair was downloaded, for example
+# Go to where your key pair was downloaded, for example
 cd '/mnt/c/Users/Hongjinn Park/Downloads'
 
 # Create a new folder to house your ssh keys if it doesn't already exist
