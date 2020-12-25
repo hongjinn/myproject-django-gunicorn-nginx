@@ -7,7 +7,7 @@ server {
     }
 
     location / {
-      proxy_pass http://172.31.26.212:8000;
+      proxy_pass http://0.0.0.0:8000;
     }
 
 }
