@@ -91,7 +91,9 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt install python3 -y &&
 
 # Gather Django files
 
-* First let's get your Github SSH key to the EC2. From your local computer ```ssh -i ~/.ssh/AWS_EC2_key.pem ~/.ssh/id_rsa ubuntu@101.42.69.777:/home/ubuntu/.ssh/```
+* First let's get your Github SSH key to the EC2. From your local computer
+
+```scp -i ~/.ssh/AWS_EC2_key.pem ~/.ssh/id_rsa ubuntu@101.42.69.777:/home/ubuntu/.ssh/```
 
 * From the EC2, run the following commands
 ```
