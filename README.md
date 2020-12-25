@@ -175,7 +175,7 @@ python3 -m venv /home/ubuntu/myproject/venv && virtualenv -p python3 /home/ubunt
 
 * Now we'll create a symlink to this file from another folder. Run the following commands: ```cd /etc/nginx/sites-enabled && sudo ln -s /etc/nginx/sites-available/myproject_nginx```
 
-* You can see the symlink by doing this command from the sites-enabled folder ```ls -l``
+* You can see the symlink by doing this command from the sites-enabled folder ```ls -l```
 
 * Now run Nginx server with ```sudo systemctl restart nginx```
 
