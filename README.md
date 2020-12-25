@@ -30,7 +30,7 @@ whateveryouwant/            # This is the only folder you can name whatever you 
     myproject/              # The is the root folder of this repository. This folder is on the EC2 and should keep the name myproject
         myapp/              # Folder for your Django app, this is the Django folder itself
             mysite/         # Houses the hello world template
-        venv/               # Folder for the virtual environment that is needed for Apache/mod_wsgi
+        venv/               # Folder for the virtual environment
         config_files/       # Folder for Apache config files
         .git/               # Folder for Git
         .gitignore          # File that tells Git what to ignore
