@@ -167,6 +167,7 @@ www     CNAME   1h     example.com.
 ```
 
 * Wait a few hours for this to catch on. Note: if you had previously paired this domain name with another ip address you might have to flush the dns cache on your browser. Otherwise when you navigate to example.com you won't see your new page 
+  * You can go to https://dnschecker.org/ and plug in your website name "www.example.com" to check if the association has been made yet between your EC2 ip and your site name
 
 # Make it https
 
