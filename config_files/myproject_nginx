@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name 101.42.69.777;
+  server_name 101.42.69.777 example.com www.example.com;
 
     location /static/ {
       alias /home/ubuntu/myproject/myapp/static/;
