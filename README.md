@@ -161,7 +161,7 @@ pip3 install -r /home/ubuntu/myproject/requirements.txt       # This installs al
 python3 /home/ubuntu/myproject/myapp/manage.py collectstatic  # Collect static files, this creates a folder for Nginx to use and serve
 
 # Same commands, all one one line
-python3 -m venv /home/ubuntu/myproject/venv && virtualenv -p python3 /home/ubuntu/myproject/venv && source /home/ubuntu/myproject/venv/bin/activate && pip3 install -r /home/ubuntu/myproject/requirements.txt && python3 /home/ubuntu/myproject/myapp/manage.py collectstatic
+python3 -m venv /home/ubuntu/myproject/venv && source /home/ubuntu/myproject/venv/bin/activate && pip3 install -r /home/ubuntu/myproject/requirements.txt && python3 /home/ubuntu/myproject/myapp/manage.py collectstatic
 ```
 
 * Edit the nginx configuration file ```nano /home/ubuntu/myproject/config_files/myproject_nginx```
