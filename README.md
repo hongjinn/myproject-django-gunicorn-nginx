@@ -12,10 +12,6 @@ Create and deploy a Django website with a pretty domain name and https.
 * AWS EC2 (virtual private machine)
 * Google Domains (where you will buy your domain name)
 
-## Strategy of this guide
-
-You could develop a fully functional site on your computer and then get it on the web. But let's get on the web first with a simple "hello world" page. Once that's done you can create whatever you want. Why? To remove the anxiety of deployment. No point in creating a beautiful website that only works on your local machine.
-
 ## Before we begin
 
 * Unfortunately you can't just copy paste everything. I tried to make it that way as much as possible
@@ -77,34 +73,6 @@ Got it? Let's begin!
   * Click "Review and Launch"
   * Click "Launch"
 
-* Create a new key pair (if you already have an existing key pair skip to the next step)
-  * Add a key pair name, for example: AWS_EC2_key
-  * Click "Download Key Pair"
-  * Click "Launch Instances"
-  * Now let's set up our SSH keys. From the bash terminal...
-```
-# Go to where your key pair was downloaded, for example
-cd '/mnt/c/Users/Hongjinn Park/Downloads'
-
-# Create a new folder to house your ssh keys if it doesn't already exist
-mkdir ~/.ssh
-
-cp AWS_EC2_key.pem ~/.ssh/AWS_EC2_key.pem                  # Copy the ssh key into the folder ~/.ssh
-sudo chmod 400 ~/.ssh/AWS_EC2_key.pem                      # Change security to make AWS happy (400 is read only)
-
-# Same commands, all on one line
-cd '/mnt/c/Users/Hongjinn Park/Downloads' && cp AWS_EC2_key.pem ~/.ssh/AWS_EC2_key.pem && sudo chmod 400 ~/.ssh/AWS_EC2_key.pem
-```
-
-* If you have an existing key pair
-  * Select the right key pair, mine is "AWS_EC2_key"
-  * Check the "I acknowledge" box
-  * Click "Launch Instances"
-
-* Click "View Instances"
-  * In the "Name" column enter whatever you want, for instance "example.com" and note that you can change this field later
-  * At the bottom in the "Description" tab, find your IPv4 Public IP. You will use this multiple times throughout this guide. Let's say mine is 101.69.42.777
-
 * SSH into your AWS EC2 instance and let's install some stuff
 ```
 # Get into your EC2
@@ -123,37 +91,21 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt install python3 -y &&
 
 # Gather Django files
 
-* We need two terminals open, one for your local machine and another for the EC2
+* First let's get your Github SSH key to the EC2. From your local computer ```ssh -i ~/.ssh AWS_EC2_key.pem id_rsa ubuntu@101.42.69.777:/home/ubuntu/.ssh/```
 
-* Let's say you want your local development folder to be on your Desktop. The process will be this: develop on your local computer (ie add a "Contact Me" page) then push changes to your EC2 to see live on the web
-  * Go to your Desktop and create a new folder, you can call this anything you want. For instance "exampledotcom" by doing ```mkdir '/mnt/c/Users/Hongjinn Park/Desktop/exampledotcom'```
-  * Navigate into the new folder you just created with ```cd !$```
-  * Get the files needed for your hello world template site by doing ```git clone git@github.com:hongjinn/myproject-nginx.git```
-  * Next rename the folder created from doing git clone from myproject-nginx to myproject ```mv myproject-nginx myproject"
+* From the EC2, run the following commands
+```
+cd ~                                                       # Should take you to /home/ubuntu
+git clone git@github.com:hongjinn/myproject-nginx.git
+```
 
 * Now we have the template for your new site. But we have to do a few adjustments 
-  * Edit the "settings.py" file with ```nano myproject/myapp/myapp/settings.py```
+  * Edit the "settings.py" file with ```nano ~/myproject/myapp/myapp/settings.py```
   * Make the line with "ALLOWED_HOSTS" look like this...
   * ```ALLOWED_HOSTS = ['localhost','101.42.69.777','www.example.com]```
   * Put in your EC2 ip and the name of the site you plan to buy on Google Domains
 
-* Next we also need to delete the Git folder and create a brand new one. You don't want to change this repository which holds a generic template. You are creating a new repository for your personal project
-```
-rm -rf .git                     # Delete the folder .git which is in the exampledotcom/myproject folder
-git init                        # Do this command while in the exampledotcom/myproject folder
-git add -A                      # Adds all files to be committed
-git commit -m "first commit"    # Commit with the message "first commit"
-
-# Now go on GitHub and create a new repository. Call it exampledotcom
-git remote add origin git@github.com:hongjinn/exampledotcom.git           # Connect your development folder to GitHub
-git push -u origin master                                                 # Push your changes to GitHub
-```
-
-* Now we have to copy our Django site to AWS EC2
-  * We just want to copy the "myproject" folder to EC2
-  * If you are not already there, do ```cd '/mnt/c/Users/Hongjinn Park/Desktop/exampledotcom'```
-  * Now do ```scp -i ~/.ssh/AWS_EC2_key.pem -r myproject ubuntu@101.42.69.777:/home/ubuntu/```
-  * Now our AWS EC2 should have all the project files
+* Next we also need to delete the Git folder so you can create a new repository ```cd ~/myproject && rm -rf .git```
 
 # Set up virtual environment and install dependencies
 
