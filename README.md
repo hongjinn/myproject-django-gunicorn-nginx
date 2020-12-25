@@ -171,78 +171,33 @@ www     CNAME   1h     example.com.
 
 # Make it https
 
-* Resources: https://certbot.eff.org/lets-encrypt/ubuntubionic-apache
+* Resources: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04
 
 * SSH into your server ```ssh -i ~/.ssh/AWS_EC2_key.pem ubuntu@101.42.69.777```
 
 ```
-# From your EC2, copy paste this all as one command
-sudo apt-get update -y && sudo apt-get install software-properties-common -y && \
-sudo add-apt-repository universe -y && sudo add-apt-repository ppa:certbot/certbot -y && \
-sudo apt-get update -y && sudo apt-get install certbot python3-certbot-apache -y
+sudo apt install certbot python3-certbot-nginx -y               # Fortunately making it https has been automated for Nginx, let's use Certbot
+sudo certbot --nginx -d example.com -d www.example.com          # -d=domain
+
+# Fill in your email address
+# Agree to the terms of service
+# Share your email if you want to (not necessary)
+# Choose option 2 to redirect http traffic to https
 ```
 
-* Update the django_project.conf file with this command
-```
-sudo cp /home/ubuntu/myproject/config_files/django_project_https_redirect.conf /etc/apache2/sites-available/django_project.conf
-```
+* Congratulations you are done. Open your browser and go to your site, https://wwww.example.com
 
-* Modify the config file with the domain name you purchased and your email
-  * ```sudo nano /etc/apache2/sites-available/django_project.conf```
-  * Update "ServerName" from www.example.com to the website you purchased on Google Domains
-  * Update "ServerAdmin webmaster@localhost" to myemail@gmail.com
+* (Optional) Setting up HSTS
+  * You can check if HSTS is enabled with the command ```curl -s -D- https://www.example.com | grep -i Strict```
+  * If it's not enabled then there will be no output
+  * From your EC2 ```sudo vim /etc/nginx/sites-available/myproject_nginx```
+  * Then after the line ```listen 443 ssl; # managed by Certbot``` add the following line
+  * ```add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";```
 
-* Now run certbot with  ```sudo certbot --apache```
-  * Fill in your email address
-  * Agree to the terms of service
-  * Share your email if you want to (not necessary)
-  * Activate https for the domain name you bought (should be option 1)
-  * Choose option 2 to redirect http traffic to https
-  
-* Now go back here to the original config file ```sudo nano /etc/apache2/sites-available/django_project.conf```
-  * Delete lines on the bottom portion and comment out the lines that start with "Rewrite". Make it look like this
-```
-    #Include conf-available/serve-cgi-bin.conf
- 
-Redirect permanent / https://www.example.com
-
-#RewriteEngine on
-#RewriteCond %{SERVER_NAME} =www.example.com
-#RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
-</VirtualHost>  
-```
-
-* Now edit https config file ```sudo nano /etc/apache2/sites-available/django_project-le-ssl.conf```
-  * Uncomment the WSGI lines so they are active
-
-* Restart server with ```sudo service apache2 restart```
-  * Go to your site. Now you have https!
-
-* Let's automate SSL certificate renewal (for https)
-  * ```sudo crontab -e```
-  * Choose 1 for nano
-  * Add to the bottom of the file...
-```
-# For more information see the manual pages of crontab(5) and cron(8)
-#
-# m h  dom mon dow   command
-30 4 1 * * sudo certbot renew --quiet
-```
-
-* Now it will run the renew command every month at 4:30 am on the 1st
-
-* You are on the web as https!
-
-* (Optional) If you want to disable TLSv1.0 and TLSv1.1 then you can do the following commands. This could interfere with your automated SSL certificate renewal
-```
-sudo nano /etc/letsencrypt/options-ssl-apache.conf         # Modify this file
-
-# Look for this part
-SSLProtocol             all -SSLv2 -SSLv3
-
-# And make it
-SSLProtocol             -all +TLSv1.2 +TLSv1.3
-```
+* Let’s Encrypt’s certificates are only valid for ninety days, but the good news is the renewal is automated
+  * To check if the renewal is automated ```sudo systemctl status certbot.timer```
+  * You can do a dry run ```sudo certbot renew --dry-run``` and if you get no errors you're good to go
+  * If the automated renewal process ever fails, Let’s Encrypt will send a message to the email you specified!
 
 # Additional deployment steps
 
@@ -265,52 +220,10 @@ nano /home/ubuntu/myproject/myapp/myapp/settings.py
 
 * This is a helpful command for checking if you're deployment ready ```python /home/ubuntu/myproject/myapp/manage.py check --deploy```
 
-# Develop website
-
-So how will you update your live production site? You will have two sets of files. One on your local machine to do development and another on your EC2 for production. The process flow is this: develop on your local machine (ie add a "Contact Me" page) then update the files on your EC2 with a ```git pull```
-
-* Create a virtual environment on your local machine
-```
-# From your local machine, from the myproject folder, you should see the file requriements.txt
-sudo apt install virtualenv -y         # Install virtual environment on your local machine
-pip3 install --upgrade virtualenv      # Upgrade your virtual environment
-virtualenv -p python3 venv             # Create your virtual environment
-source venv/bin/activate               # Activate your virtual environment
-pip3 install -r requirements.txt       # This installs all your dependencies
-```
-
-* To see your site on your local machine, do ```python manage.py runserver```
-  * Go to your browser and type in the url localhost:8000 or http://127.0.0.1:8000
-
-* Create a superuser ```python manage.py createsuperuser```
-  * Fill out the details
-  * Go to your site and add "/admin" to the url. For example www.example.com/admin or "localhost:8000/admin"
-  * Log in with the super user account you created
-
-* Now you can start developing your site
-
-* To update your production server
-  * ```git push``` to your EC2
-  * Now from your EC2, do ```git pull && sudo service apache2 restart```
-  * Your site should now be updated
-
 ## Other development notes
-
 * It's not very unique but I like using the Starter Template found here: https://getbootstrap.com/docs/4.3/getting-started/introduction/
 
 * It's good practice to use template extensions: https://docs.djangoproject.com/en/3.0/ref/templates/language/
----
-
-# Troubleshooting
-
-* Production site can't access your database which can happen if your database is a flat file and you make changes on your local computer and do ```git push``` to your remote repository (GitHub) and then ```git pull``` on your EC2 
-```
-ls -la /home/ubuntu/myproject/myapp   # For db.sqlite3 it is supposed to be "-rw-rw-rw-r-- ubuntu www-data"
-sudo chown :www-data db.sqlite3       # "www-data" which is Apache should have group ownership of db.sqlite3
-sudo chmod 664 db.sqlite3             # 664 (owner can read/write, apache can read/write, others can read only)
-```
-
-* See what ports are being listened to (ie 80,22,443,53) with ```netstat -ant```
 
 # PostgreSQL on the EC2 itself
 
