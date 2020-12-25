@@ -6,6 +6,10 @@ server {
       alias /home/ubuntu/myproject/myapp/static/;
     }
 
+    location /media/ {
+      alias /home/ubuntu/myproject/myapp/media/;
+    }
+
     location / {
       proxy_pass http://localhost:8000/;
     }
