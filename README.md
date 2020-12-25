@@ -1,12 +1,10 @@
 # Website from scratch
 
-Prerequisites
-
+Prerequisites:
 * Instructions assume you know how to use SSH keys and GitHub
 * If you want a more detailed guide to create a site from scratch then use this repository https://github.com/hongjinn/myproject
 
 Create and deploy a Django website with a pretty domain name and https.
-
 * Django (Python framework)
 * Nginx (a reverse proxy server)
 * Gunicorn (Python server)
