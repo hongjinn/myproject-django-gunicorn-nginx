@@ -11,6 +11,7 @@ server {
     }
 
     location / {
+      include proxy_params;
       proxy_pass http://localhost:8000/;
     }
 
