@@ -97,6 +97,9 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt install python3 -y &&
 ```
 cd ~                                                       # Should take you to /home/ubuntu
 git clone git@github.com:hongjinn/myproject-nginx.git
+
+# It's important that you rename the folder to myproject as the config files assume that!
+mv myproject-django-gunicorn-nginx myproject
 ```
 
 * Now we have the template for your new site. But we have to do a few adjustments 
