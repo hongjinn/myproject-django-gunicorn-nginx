@@ -165,10 +165,7 @@ python3 -m venv /home/ubuntu/myproject/venv && virtualenv -p python3 /home/ubunt
 ```
 
 * Edit the nginx configuration file ```nano /home/ubuntu/myproject/config_files/myproject_nginx```
-
-* Replace with your EC2 address in two places
-  * ```server_name 101.42.69.777;```
-  * ```proxy_pass http://101.42.69.777:8000;``` and make sure you leave ```:8000;``` after your EC2 ip address
+  * Replace this line with your EC2 address: ```server_name 101.42.69.777;```
 
 * Now move the file to the right folder with ```sudo cp /home/ubuntu/myproject/config_files/myproject_nginx /etc/nginx/sites-available/```
 
