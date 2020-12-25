@@ -129,7 +129,8 @@ python3 -m venv /home/ubuntu/myproject/venv && source /home/ubuntu/myproject/ven
 # Set up web server
 
 * Edit the nginx configuration file ```nano /home/ubuntu/myproject/config_files/myproject_nginx```
-  * Replace this line with your EC2 address: ```server_name 101.42.69.777;```
+  * Replace this line with your EC2 ip address and the domain name you're going to buy
+  * ```server_name 101.42.69.777 example.com www.example.com;```
 
 * Now move the file to the right folder with ```sudo cp /home/ubuntu/myproject/config_files/myproject_nginx /etc/nginx/sites-available/```
 
