@@ -45,6 +45,8 @@ whateveryouwant/            # This is the only folder you can name whatever you 
 
 * Gather Django files
 
+* Set up virtual environment and install dependencies
+
 * Set up web server
 
 * Add a domain name
@@ -150,9 +152,9 @@ git push -u origin master                                                 # Push
   * Now do ```scp -i ~/.ssh/AWS_EC2_key.pem -r myproject ubuntu@101.42.69.777:/home/ubuntu/```
   * Now our AWS EC2 should have all the project files
 
-# Set up web server
+# Set up virtual environment and install dependencies
 
-* Now lets create a virtual environment folder on your EC2. This is critical as mod_wsgi will point to it
+* Now lets create a virtual environment folder on your EC2. We also need to install stuff like Django and Gunicorn
 ```
 # From your EC2
 python3 -m venv /home/ubuntu/myproject/venv                   # Create your virtual environment
@@ -163,6 +165,8 @@ python3 /home/ubuntu/myproject/myapp/manage.py collectstatic  # Collect static f
 # Same commands, all one one line
 python3 -m venv /home/ubuntu/myproject/venv && source /home/ubuntu/myproject/venv/bin/activate && pip3 install -r /home/ubuntu/myproject/requirements.txt && python3 /home/ubuntu/myproject/myapp/manage.py collectstatic
 ```
+
+# Set up web server
 
 * Edit the nginx configuration file ```nano /home/ubuntu/myproject/config_files/myproject_nginx```
   * Replace this line with your EC2 address: ```server_name 101.42.69.777;```
