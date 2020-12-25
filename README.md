@@ -183,35 +183,7 @@ python3 -m venv /home/ubuntu/myproject/venv && virtualenv -p python3 /home/ubunt
 
 * Now open your web browser and navigate to your EC2 ip address ```http://101.42.69.777```
 
-
-
-# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
-# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
-# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
-# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
-# APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE APACHE 
-
-
-# Copy Apache config file
-sudo scp /home/ubuntu/myproject/config_files/django_project.conf /etc/apache2/sites-available/
-sudo a2ensite django_project                                  # Enables the config file we just copied
-sudo a2dissite 000-default.conf                               # Disables the default config file
-
-# Give Apache access to the correct files
-sudo chown :www-data /home/ubuntu/myproject/myapp/db.sqlite3  # Give ownership to Apache2 who is www-data
-sudo chmod 664 /home/ubuntu/myproject/myapp/db.sqlite3        # Change permissions on DB
-sudo chown :www-data /home/ubuntu/myproject/myapp/            # Give it ownership to the whole folder
-sudo chown -R :www-data /home/ubuntu/myproject/myapp/media/   # Media folder is what users upload, for example a profile pic
-sudo chmod -R 775 /home/ubuntu/myproject/myapp/media          # Change permission level
-
-# Now start the Apache server
-sudo service apache2 restart                                  # After this we're live
-
-# Same commands, all on one line
-sudo scp /home/ubuntu/myproject/config_files/django_project.conf /etc/apache2/sites-available/ && sudo a2ensite django_project && sudo a2dissite 000-default.conf && sudo chown :www-data /home/ubuntu/myproject/myapp/db.sqlite3 && sudo chmod 664 /home/ubuntu/myproject/myapp/db.sqlite3 && sudo chown :www-data /home/ubuntu/myproject/myapp/ && sudo chown -R :www-data /home/ubuntu/myproject/myapp/media/ && sudo chmod -R 775 /home/ubuntu/myproject/myapp/media && sudo service apache2 restart
-```
-
-* Now go to 101.42.69.777 in your browser and you should see the site!
+* How to check error logs ```cat /var/log/nginx/error.log```
 
 # Add a domain name
 
