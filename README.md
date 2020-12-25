@@ -37,7 +37,6 @@ whateveryouwant/            # This is the only folder you can name whatever you 
         .gitignore          # File that tells Git what to ignore
         requirements.txt    # Python dependencies, for example Django REST framework
         README.md           # The file that generates these instructions
-        Dockerfile          # Incomplete... more to come
 ```
 
 ## Major steps
