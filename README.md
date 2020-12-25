@@ -135,10 +135,12 @@ python3 -m venv /home/ubuntu/myproject/venv && source /home/ubuntu/myproject/ven
 * Now run Nginx server with ```sudo systemctl restart nginx```
 
 * Now run the Gunicorn server with ```gunicorn -c /home/ubuntu/myproject/config_files/gunicorn_config.py myapp.wsgi```
+  * To run the process in the background, do Ctrl+z then input the command ```bg```
+  * To stop Gunicorn do ```fg``` then Ctrl+c
 
 * Now open your web browser and navigate to your EC2 ip address ```http://101.42.69.777```
 
-* How to check error logs ```cat /var/log/nginx/error.log```
+* You can check Nginx error logs with ```cat /var/log/nginx/error.log```
 
 # Add a domain name
 
