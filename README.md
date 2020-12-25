@@ -2,7 +2,7 @@
 
 Prerequisites:
 * Instructions assume you have beginner understanding (like me) of SSH keys, GitHub, AWS, and the terminal
-* If you want a more detailed guide to create a site from scratch then use this repository https://github.com/hongjinn/myproject
+* If you want a more detailed guide to create a site from scratch then use this repository https://github.com/hongjinn/myproject-django-mod_wsgi-apache
 
 Create and deploy a Django website with a pretty domain name and https.
 * Django (Python framework)
